@@ -30,8 +30,13 @@ jobs:
 
    
 
-      - name: Copy .aab file to E:\MAUI_AABs\
+      - name: Copy .aab file to E:\MAUI_AABs
+        shell: pwsh
         run: |
-          if not exist "E:\MAUI_AABs" mkdir "E:\MAUI_AABs"
-          copy ".\output\*.aab" "E:\MAUI_AABs\"
+          $dest = "E:\MAUI_AABs"
+          if (!(Test-Path $dest)) {
+            New-Item -ItemType Directory -Path $dest
+          }
+          Copy-Item -Path ".\output\*.aab" -Destination $dest
+
 
