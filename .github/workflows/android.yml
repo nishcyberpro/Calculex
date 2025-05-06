@@ -29,14 +29,18 @@ jobs:
         run: dotnet publish Calculex.csproj -f net8.0-android -c Release -o ./output /p:GenerateAppBundle=true
 
    
+      - name: List available drives
+        shell: pwsh
+        run: Get-PSDrive
 
-      - name: Copy .aab file to E:\MAUI_AABs
+      - name: Copy .aab file to C:\MAUI_AABs
         shell: pwsh
         run: |
-          $dest = "E:\MAUI_AABs"
+          $dest = "C:\MAUI_AABs"
           if (!(Test-Path $dest)) {
             New-Item -ItemType Directory -Path $dest
           }
           Copy-Item -Path ".\output\*.aab" -Destination $dest
+
 
 
