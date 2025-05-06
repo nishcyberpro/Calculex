@@ -1,6 +1,5 @@
-name: Build .NET MAUI Android App
+name: Build .NET MAUI Android AAB
 
-<<<<<<< HEAD
 on:
   push:
     branches: [master]
@@ -18,57 +17,19 @@ jobs:
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.0.x'  # Adjust according to your MAUI version
+          dotnet-version: '8.0.x'
 
-      - name: Install MAUI Workload
+      - name: Install MAUI workload
         run: dotnet workload install maui
 
       - name: Restore NuGet packages
-        run: dotnet restore MyMauiApp/MyMauiApp.csproj
-
-      - name: Build Android APK
-        run: dotnet publish MyMauiApp/MyMauiApp.csproj -f net8.0-android -c Release -o ./output /p:GenerateAppBundle=true
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: android-apk
-          path: output/**/*.apk
-
-=======
-on:
-  push:
-    branches: [master]
-  pull_request:
-    branches: [master]
-
-jobs:
-  build:
-    runs-on: windows-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Setup .NET SDK
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '8.0.x'  # Adjust according to your MAUI version
-
-      - name: Install MAUI Workload
-        run: dotnet workload install maui
-
-      - name: Restore NuGet Packages
         run: dotnet restore Calculex.csproj
 
-      - name: Build MAUI Windows App
-        run: dotnet publish Calculex.csproj -f net8.0-windows10.0.19041.0 -c Release -o ./output /p:GenerateAppBundle=true
+      - name: Build Android AAB
+        run: dotnet publish Calculex.csproj -f net8.0-android -c Release -o ./output /p:GenerateAppBundle=true
 
-
-      - name: Upload APK
+      - name: Upload AAB
         uses: actions/upload-artifact@v4
         with:
-          name: android-apk
-          path: output/**/*.apk
-
->>>>>>> ecb6ef717fe5562c0ca1bfadbe37a2bcfcd4cb59
+          name: android-aab
+          path: output/**/*.aab
