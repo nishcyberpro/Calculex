@@ -28,8 +28,10 @@ jobs:
       - name: Build Android AAB
         run: dotnet publish Calculex.csproj -f net8.0-android -c Release -o ./output /p:GenerateAppBundle=true
 
-      - name: Upload AAB
-        uses: actions/upload-artifact@v4
-        with:
-          name: android-aab
-          path: output/**/*.aab
+   
+
+      - name: Copy .aab file to E:\MAUI_AABs\
+        run: |
+          if not exist "E:\MAUI_AABs" mkdir "E:\MAUI_AABs"
+          copy ".\output\*.aab" "E:\MAUI_AABs\"
+
