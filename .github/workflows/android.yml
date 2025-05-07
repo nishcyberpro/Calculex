@@ -29,4 +29,4 @@ jobs:
       - name: Copy AAB to E:\MAUI_AABs\
         run: |
           if not exist "E:\MAUI_AABs" mkdir "E:\MAUI_AABs"
-          copy ".\output\*.aab" "E:\MAUI_AABs\"
+          copy ".\output\*.aab" "c:\MAUI_AABs\"
