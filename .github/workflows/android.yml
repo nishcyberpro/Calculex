@@ -14,10 +14,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup .NET SDK
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '8.0.x'  # Adjust as needed
+      
 
       - name: Install MAUI workload (optional if already installed)
         continue-on-error: true  # avoids breaking if it's already installed or times out
