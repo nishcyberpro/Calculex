@@ -1,4 +1,4 @@
-name: Build .NET MAUI Android AAB
+name: Build .NET MAUI Android AAB Locally
 
 on:
   push:
@@ -8,45 +8,28 @@ on:
 
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: self-hosted  # ensure your self-hosted runner is tagged properly
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # - name: Setup .NET SDK
-      #   uses: actions/setup-dotnet@v4
-      #   with:
-      #     dotnet-version: '8.0.x'
-      #     install-dir: ${{ runner.temp }}/dotnet
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'  # Adjust as needed
 
-      # - name: Add .NET tools to PATH
-      #   run: echo "${{ runner.temp }}/dotnet" | Out-File -Append -Encoding utf8 -FilePath $env:GITHUB_PATH
-      #   shell: pwsh
-
-
-      - name: Install MAUI workload
+      - name: Install MAUI workload (optional if already installed)
+        continue-on-error: true  # avoids breaking if it's already installed or times out
         run: dotnet workload install maui
 
       - name: Restore NuGet packages
         run: dotnet restore Calculex.csproj
 
-      - name: Build Android AAB
+      - name: Build .NET MAUI Android AAB
         run: dotnet publish Calculex.csproj -f net8.0-android -c Release -o ./output /p:GenerateAppBundle=true
 
-   
-      - name: List available drives
-        shell: pwsh
-        run: Get-PSDrive
-
-      - name: Copy .aab file to C:\MAUI_AABs
-        shell: pwsh
+      - name: Copy AAB to E:\MAUI_AABs\
         run: |
-          $dest = "C:\MAUI_AABs"
-          if (!(Test-Path $dest)) {
-            New-Item -ItemType Directory -Path $dest
-          }
-          Copy-Item -Path ".\output\*.aab" -Destination $dest
-
-
-
+          if not exist "E:\MAUI_AABs" mkdir "E:\MAUI_AABs"
+          copy ".\output\*.aab" "E:\MAUI_AABs\"
