@@ -28,5 +28,6 @@ jobs:
 
       - name: Copy AAB to E:\MAUI_AABs\
         run: |
-          if not exist "c:\MAUI_AABs" mkdir "E:\MAUI_AABs"
-          copy ".\output\*.aab" "c:\MAUI_AABs\"
+          if (-not (Test-Path "C:\MAUI_AABs")) {
+            New-Item -ItemType Directory -Path "c:\MAUI_AABs"
+          }
